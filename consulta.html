@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Parse Data</title>
+    <script>
+        async function fetchClassData(className) {
+            const url = `https://parseapi.back4app.com/classes/${className}`;
+            
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-Parse-Application-Id': 'jFc8weoj0ooJf9ImqkiTjVg8bkJ1FfPS9nBPjUHS',
+                    'X-Parse-REST-API-Key': '2Mq67jHWLDKCJiG5tAUWeGKuF9vKQ46URGZ9U8Wa',
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const result = await response.json();
+                return result.results;
+            } catch (error) {
+                console.error('Error fetching class data:', error);
+                return null;
+            }
+        }
+
+        async function fetchAllData() {
+            const classNames = ['censo_inep_2023'];
+            const allData = {};
+
+            for (const className of classNames) {
+                const data = await fetchClassData(className);
+                if (data) {
+                    allData[className] = data.map(item => ({
+                        IN_AGUA_REDE_PUBLICA: item.IN_AGUA_REDE_PUBLICA,
+                        IN_ENERGIA_REDE_PUBLICA: item.IN_ENERGIA_REDE_PUBLICA,
+                        IN_ESGOTO_REDE_PUBLICA: item.IN_ESGOTO_REDE_PUBLICA,
+                    }));
+                } else {
+                    allData[className] = 'Error fetching data';
+                }
+            }
+
+            document.getElementById('response').innerText = JSON.stringify(allData, null, 2);
+        }
+
+        window.onload = fetchAllData;
+    </script>
+</head>
+<body>
+    <h1>Fetch Parse Data</h1>
+    <pre id="response"></pre>
+</body>
+</html>

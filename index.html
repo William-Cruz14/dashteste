@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> DashBoard Censo 2023 </title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parse/3.4.3/parse.min.js"></script>
+    <script src="back4app.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Censo INEP 2023 <br> Dados escolares sobre água, energia e esgoto </h1>
+    <div id="data-container"></div>
+    
+    <div class="main">
+        <div class="sidebar">
+            <p>Quantidades</p>
+            <div class="dashBoardEsq">
+                <div id="dado1">Quantidade de Escolas</div>
+                <div id="dado2">Quantidade com energia</div>
+                <div id="dado3">Quantidade com água</div>
+                <div id="dado4">Quantidade de escolas com coleta seletiva</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="dashBoard-grafico">
+                <div id="grafico1"><canvas id="chart1"></canvas></div>
+                <div id="grafico2"><canvas id="chart2"></canvas></div>
+                <div id="grafico3"><canvas id="chart3"></canvas></div>
+                <div id="grafico4"><canvas id="chart4"></canvas></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
