@@ -1,28 +1,26 @@
 Parse.initialize('jFc8weoj0ooJf9ImqkiTjVg8bkJ1FfPS9nBPjUHS', '1jzfDQ7nCu6UgkoBAwUpqQ3mpg8hpEL5t6auoAAZ');
+
 Parse.serverURL = 'https://parseapi.back4app.com';
 
 async function fetchDataAndDisplay() {
     const TestObject = Parse.Object.extend('censo_inep_2023');
-    let query = new Parse.Query(TestObject);
-    const limit = 100; // Número de itens por página
-    let skip = 0;
+    const query = new Parse.Query(TestObject);
     let allResults = [];
-    let done = false;
 
     try {
-        while (!done) {
-            query = new Parse.Query(TestObject);
+        let skip = 0; // Começa no início
+        const limit = 1000; // Define o limite por consulta (ajuste conforme necessário)
+        let results;
+
+        do {
             query.limit(limit);
             query.skip(skip);
-            const results = await query.find();
-
-            if (results.length === 0) {
-                done = true;
-            } else {
-                allResults = allResults.concat(results);
-                skip += limit;
-            }
-        }
+            results = await query.find();
+            allResults = allResults.concat(results); // Adiciona os resultados à lista completa
+            skip += limit; // Avança para a próxima página
+        } while (results.length === limit);
+    
+        console.log(`Total results: ${allResults.length}`);
 
         // Manipular os dados obtidos
         const quantidadeEscolas = allResults.length;
